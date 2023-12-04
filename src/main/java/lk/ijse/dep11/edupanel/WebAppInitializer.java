@@ -1,7 +1,12 @@
 package lk.ijse.dep11.edupanel;
 
 
+import org.springframework.web.filter.FormContentFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -19,4 +24,16 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement("/tmp"));
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        // patch eka multipart form data ekka wada krnna oni nisa filter eka damma
+        return new Filter[]{new FormContentFilter()};
+    }
 }
+
