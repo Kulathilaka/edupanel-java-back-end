@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 @PropertySource("classpath:/application.properties")
 public class WebRootConfig {
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public HikariDataSource dataSource(Environment env){
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(env.getRequiredProperty("spring.datasource.url"));

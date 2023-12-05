@@ -21,3 +21,8 @@ CREATE TABLE IF NOT EXISTS part_time_rank
     CONSTRAINT pk_part PRIMARY KEY (lecturer_id, `rank`),
     CONSTRAINT fk_part FOREIGN KEY (lecturer_id) REFERENCES lecturer (id)
 );
+
+SELECT l.id, l.name, ftr.`rank`, ptr.`rank` FROM lecturer l
+    LEFT OUTER JOIN full_time_rank ftr on l.id = ftr.lecturer_id
+    LEFT OUTER JOIN part_time_rank ptr on l.id = ptr.lecturer_id
+    WHERE l.id = 1;
